@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hackaburg_project/chat_list/view/chat_list.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const App());
@@ -14,34 +16,9 @@ class App extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
-        primarySwatch: Colors.blue,
+        colorSchemeSeed: Colors.blueAccent,
       ),
-      home: const HomePage(),
+      home: const BottomNavigationBarExample(),
     );
   }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            semanticLabel: ,
-          ),
-          onPressed: () {
-
-          },
-        ),
-      ),
-      body: Center(
-        child: Text('hello world'),
-      ),
-    );
-  }
-
 }
