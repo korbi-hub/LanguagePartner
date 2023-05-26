@@ -1,4 +1,4 @@
-# LaPA (Language Partner)
+# LaPa (Language Partner)
 
 ## Inspiration
 Imagine a world where learning a new language is not only a passion but also an opportunity for everyone. We believe in the transformative power of language and the profound impact it can have on individuals and communities. Our inspiration comes from the diverse aspirations of language learners who are eager to explore new cultures, connect with people from around the globe, and broaden their horizons. We recognize that not everyone has equal access to language learning resources. That's why we've made it our mission to break down barriers and create a platform that empowers individuals, regardless of their income, to embark on their language learning journey.
