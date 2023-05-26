@@ -10,6 +10,7 @@ Figma: [Figma](https://www.figma.com/file/UGmocjHXjvbi0D1kboAGJv/Material-3-Desi
 
 ## Documents
 User Guide: [Guide](userguide.md)
+
 DevOPs Post: [Post](https://devpost.com/software/lapa)
 
 ## Application
