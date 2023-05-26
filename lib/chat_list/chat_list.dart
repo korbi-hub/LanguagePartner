@@ -15,17 +15,33 @@ class ChatList extends StatelessWidget {
           name: contactNameOne,
           onClick: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Chat(name: contactNameOne))),
-          options: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ContactInfo(image: imgPathJuergen, name: contactNameOne, description: descriptionContactOne))),
+          options: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ContactInfo(
+                image: imgPathJuergen,
+                name: contactNameOne,
+                description: descriptionContactOne,
+              ),
+            ),
+          ),
         ),
         ContactWindow(
           imagePath: imgPathLaura,
           name: contactNameTwo,
-          onClick: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Chat(name: contactNameTwo))),
-          options: () {
-            print('navigate to information');
-          },
+          onClick: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Chat(name: contactNameTwo),
+            ),
+          ),
+          options: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ContactInfo(
+                image: imgPathLaura,
+                name: contactNameTwo,
+                description: descriptionContactTwo,
+              ),
+            ),
+          ),
         ),
       ],
     );
@@ -68,7 +84,9 @@ class ContactWindow extends StatelessWidget {
                         size: 48,
                       ),
                     ),
-                    SizedBox(width: 16,),
+                    SizedBox(
+                      width: 16,
+                    ),
                     Expanded(
                       flex: 5,
                       child: Text(
@@ -102,7 +120,7 @@ class CircularImage extends StatelessWidget {
       width: size,
       height: size,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(45.0),
+        borderRadius: BorderRadius.circular(90.0),
         child: Image.asset(
           path,
           height: size,

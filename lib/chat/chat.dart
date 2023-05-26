@@ -189,15 +189,13 @@ class _ChatBubbleState extends State<ChatBubble> {
                 children: [
                   Padding(
                     padding: paddingAllSidesRegular,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.message,
-                          style: textStyleRegular,
-                          textAlign: TextAlign.start,
-                        )
-                      ],
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        widget.message,
+                        style: textStyleRegular,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                   ),
                   Padding(

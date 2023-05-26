@@ -22,25 +22,27 @@ class ContactInfo extends StatelessWidget {
               builder: (context) => HomeScreen())),
         ),
         title: Text(
-          'persona information',
+          'contact',
         ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          CircularImage(
+            path: image,
+            size: 128,
+          ),
+          SizedBox(
+            height: 16,
+          ),
           Expanded(
-            flex: 2,
-            child: CircularImage(
-              path: image,
-              size: 64,
-            ),
-          ),Expanded(
             flex: 1,
             child: Text(
               name,
               style: textStyleLarge,
             ),
-          ),Expanded(
+          ),
+          Expanded(
             flex: 4,
             child: Text(
               description,

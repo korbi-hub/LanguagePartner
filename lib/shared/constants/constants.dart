@@ -6,6 +6,7 @@ const paddingAllSidesSmall = EdgeInsets.all(4);
 const textStyleLarge = TextStyle(
   fontFamily: 'Roboto',
   fontSize: 20,
+  fontWeight: FontWeight.bold,
 );
 
 const textStyleRegular = TextStyle(
