@@ -1,0 +1,4 @@
+#Fri May 26 09:58:59 CEST 2023
+base.0=C\:\\Users\\korbi\\OneDrive\\Dokumente\\GitHub\\LanguagePartner\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
