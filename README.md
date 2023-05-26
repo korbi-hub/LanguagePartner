@@ -26,3 +26,6 @@ Github: [Noah](https://github.com/NoahMeissner)
 
 **Korbinian K:**
 Github: [Korbinian](https://github.com/korbi-hub)
+
+
+## Stacks
