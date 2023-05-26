@@ -22,7 +22,7 @@ app.use(cors());
 async function getUser(db) {
   const userCol = collection(db, "user");
   const userSnapshot = await getDocs(userCol);
-  const userList = userSnapshot.docs.map((doc) => doc.data());
+  const userList = userSnapshot.docs.map((doc) => doc.id);
   return userList;
 }
   
