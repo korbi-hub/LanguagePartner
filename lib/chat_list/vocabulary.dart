@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:language_partner/shared/constants/constants.dart';
 
 Stream<List<String>> dataStream() async*{
-  yield ['item'];
+  yield ['item','item','item','item','item','item','item','item','item','item'];
 }
 
 class Vocabulary extends StatelessWidget {
@@ -23,22 +23,25 @@ class Vocabulary extends StatelessWidget {
                 return Center(
                   child: Padding(
                     padding: paddingAllSidesRegular,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          data[index],
-                          style: textStyleRegular,
-                        ),
-                        Divider(
-                          color: Colors.black45,
-                          thickness: 4.0,
-                        ),
-                        Text(
-                          data[index],
-                          style: textStyleRegular,
-                        ),
-                      ],
+                    child: IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            data[index],
+                            style: textStyleRegular,
+                          ),
+                          VerticalDivider(
+                            width: 20,
+                            thickness:1,
+                            color: Colors.black54,
+                          ),
+                          Text(
+                            data[index],
+                            style: textStyleRegular,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

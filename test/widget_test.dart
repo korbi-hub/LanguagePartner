@@ -1,6 +1,6 @@
-import 'package:LanguagePartner/chat_list/view/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:language_partner/chat_list/view/homepage.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

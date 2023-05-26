@@ -27,4 +27,6 @@ flutter_intl:
   flutter:
     assets:
       - /kebab_menu.svg
+      - /juergen.png
+      - /laura_mueller.png
 

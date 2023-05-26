@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:language_partner/chat_list/chat_list.dart';
 import 'package:language_partner/chat_list/vocabulary.dart';
+import 'package:language_partner/shared/shared_widgets/back_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   static List<Widget> _widgetOptions = <Widget>[
     Scaffold(
       appBar: AppBar(
+        leading: NavigateBackButton(
+          onPressed: () {},
+        ),
         title: Text('Chat'),
       ),
       body: ChatList(),

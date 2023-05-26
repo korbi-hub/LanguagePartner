@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:language_partner/chat/chat.dart';
+import 'package:language_partner/contact_info/contact_info.dart';
 import 'package:language_partner/shared/constants/constants.dart';
 
 class ChatList extends StatelessWidget {
@@ -8,33 +10,24 @@ class ChatList extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        // SearchBar(),
         ContactWindow(
-          imagePath: 'imagePath',
+          imagePath: imgPathJuergen,
           name: contactNameOne,
-          onClick: () => print('navigate to $contactNameOne'), options: () { print('navigate to information'); },
+          onClick: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Chat(name: contactNameOne))),
+          options: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ContactInfo(image: imgPathJuergen, name: contactNameOne, description: descriptionContactOne))),
         ),
         ContactWindow(
-          imagePath: 'imagePath',
+          imagePath: imgPathLaura,
           name: contactNameTwo,
-          onClick: () => print('navigate to $contactNameTwo'), options: () { print('navigate to information'); },
+          onClick: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => Chat(name: contactNameTwo))),
+          options: () {
+            print('navigate to information');
+          },
         ),
       ],
-    );
-  }
-}
-
-class SearchBar extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: paddingAllSidesRegular,
-      child: SearchBar(), // TODO: implement SearchBar
     );
   }
 }
@@ -56,37 +49,65 @@ class ContactWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: paddingAllSidesRegular,
-      child: Container(
-        height: 64,
-        child: Card(
-          elevation: 8,
-          child: Padding(
-            padding: paddingAllSidesSmall,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: imagePath == imagePath
-                      ? Icon(Icons.person)
-                      : Image.asset(imagePath),
+        padding: paddingAllSidesRegular,
+        child: GestureDetector(
+          onTap: onClick,
+          child: Container(
+            height: 64,
+            child: Card(
+              elevation: 8,
+              child: Padding(
+                padding: paddingAllSidesSmall,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: CircularImage(
+                        path: imagePath,
+                        size: 48,
+                      ),
+                    ),
+                    SizedBox(width: 16,),
+                    Expanded(
+                      flex: 5,
+                      child: Text(
+                        name,
+                        style: textStyleRegular,
+                      ),
+                    ),
+                    IconButton(
+                      icon: SvgPicture.asset('/kebab_menu.svg'),
+                      iconSize: 48,
+                      onPressed: options,
+                    ),
+                  ],
                 ),
-                Expanded(
-                  flex: 5,
-                  child: Text(
-                    name,
-                    style: textStyleRegular,
-                  ),
-                ),
-                IconButton(
-                  icon: SvgPicture.asset('/kebab_menu.svg'),
-                  iconSize: 48,
-                  onPressed: options,
-                ),
-              ],
+              ),
             ),
           ),
+        ));
+  }
+}
+
+class CircularImage extends StatelessWidget {
+  final String path;
+  final double size;
+
+  const CircularImage({super.key, required this.path, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(45.0),
+        child: Image.asset(
+          path,
+          height: size,
+          width: size,
+          fit: BoxFit.fill,
         ),
       ),
     );
