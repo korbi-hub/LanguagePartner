@@ -19,8 +19,6 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  List<Message> messages = [];
-
   late ChatBloc bloc;
 
   @override
@@ -39,7 +37,7 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
-    final chatBloc = context.read<ChatBloc>()..add(GetMessages());
+    bloc = context.read<ChatBloc>()..add(GetMessages());
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -59,7 +57,7 @@ class _ChatState extends State<Chat> {
           Expanded(
             flex: 9,
             child: BlocBuilder<ChatBloc, ChatState>(
-              bloc: chatBloc,
+              bloc: bloc,
               builder: (ctx, state) {
                 if (state is ChatInitial) {
                   return _createList([]);
@@ -77,23 +75,22 @@ class _ChatState extends State<Chat> {
               child: Row(
                 children: [
                   Expanded(
-                    child: SizedBox(
-                      height: 48,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'enter a message',
-                          suffixIcon: IconButton(
-                            onPressed: () => _sendMessage(),
-                            icon: Icon(
-                              Icons.send,
-                            ),
+                      child: SizedBox(
+                    height: 48,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'enter a message',
+                        suffixIcon: IconButton(
+                          onPressed: () => _sendMessage(),
+                          icon: Icon(
+                            Icons.send,
                           ),
                         ),
-                        controller: _controller,
                       ),
-                    )
-                  ),
+                      controller: _controller,
+                    ),
+                  )),
                 ],
               ),
             ),
@@ -123,13 +120,15 @@ class _ChatState extends State<Chat> {
       String text = _controller.text;
       _controller.text = '';
       setState(() {
-        messages.add(
-          Message(
-            DateTime.now() as String,
-            'A',
-            messages.length.toString(),
-            text,
-            'description for $text',
+        bloc.add(
+          SendMessage(
+            Message(
+              'user',
+              'id',
+              text,
+              null,
+              null,
+            ).toJson(),
           ),
         );
       });
@@ -178,9 +177,6 @@ class ChatMessage extends StatelessWidget {
     );
   }
 
-  String _formatTimestamp(DateTime timestamp) {
-    return '10:00';
-  }
 }
 
 class ChatBubble extends StatefulWidget {
@@ -295,7 +291,8 @@ class _ChatBubbleState extends State<ChatBubble> {
                         color: Colors.black,
                       ),
                       GestureDetector(
-                        onTap: () async => await Clipboard.setData(ClipboardData(text: widget.message)),
+                        onTap: () async => await Clipboard.setData(
+                            ClipboardData(text: widget.message)),
                         child: Text(
                           'copy',
                           style: textStyleRegular,
@@ -306,7 +303,9 @@ class _ChatBubbleState extends State<ChatBubble> {
                       ),
                       GestureDetector(
                         onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Vocabulary(message: widget.message)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Vocabulary(message: widget.message)),
                         ),
                         child: Text(
                           'get vocabulary',

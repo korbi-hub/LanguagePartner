@@ -1,14 +1,12 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
-import '../shared/constants/constants.dart';
+import 'package:language_partner/shared/constants/constants.dart';
 
 class Message {
   final String user;
   final String id;
   final String message;
-  final String description;
+  final String? description;
   final String? timestamp;
 
   Message(this.user, this.id, this.message, this.description, this.timestamp);
@@ -17,9 +15,9 @@ class Message {
     return Message(
       json['user'],
       json['id'],
-      json['message'],
+      json['messages'],
       json['description'],
-      json['timestamp'],
+      json['time'].toString(),
     );
   }
 
@@ -34,19 +32,20 @@ class Message {
   }
 }
 
-
-
 class Messages {
 
+  static String url = 'localhost:4000/';
+
+  // TODO: pass chat
   static Future<List<Message>> getMessages() async {
-    var result = await http.get(Uri.parse(url()));
+    var result = await http.get(Uri.parse('$url/api/user/$uid/chats/$chatIdUserOne/messages'));
     List<dynamic> messages = jsonDecode(result.body);
     return messages.map((e) => Message.fromJson(e)).toList();
   }
 
   static Future<List<Message>?> sendMessage(Map<String, dynamic> message) async {
     final response = await http.put(
-      Uri.parse(url()),
+      Uri.parse(url),
       headers: {
         'Content-Type': 'application/json', // Specify the content type as JSON
       },
