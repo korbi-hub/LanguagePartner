@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hackaburg_project/chat_list/view/chat_list.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:language_partner/chat_list/bloc/chat_list_bloc.dart';
+import 'package:language_partner/chat_list/view/homepage.dart';
 
 void main() {
   runApp(const App());
@@ -18,7 +19,10 @@ class App extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.blueAccent,
       ),
-      home: const BottomNavigationBarExample(),
+      home: BlocProvider(
+        create: (BuildContext context) => ChatBloc(),
+        child: const HomeScreen(),
+      ),
     );
   }
 }

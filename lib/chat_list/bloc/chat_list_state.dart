@@ -4,3 +4,5 @@ part of 'chat_list_bloc.dart';
 abstract class ChatState {}
 
 class ChatInitial extends ChatState {}
+
+class OptionsRequested extends ChatState {}
