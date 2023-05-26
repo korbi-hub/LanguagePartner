@@ -55,7 +55,7 @@ app.get("/api/user/:userId/chats", async (req, res) => {
     const userId = req.params.userId;
     const chatsRef = collection(db, "user", userId, "chats");
     const querySnapshot = await getDocs(chatsRef);
-    const chats = querySnapshot.docs.map((doc) => doc.data());
+    const chats = querySnapshot.docs.map((doc) => doc.id);
     console.log(chats);
     res.json(chats);
   } catch (error) {
