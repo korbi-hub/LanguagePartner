@@ -12,7 +12,6 @@ Figma: [Figma](https://www.figma.com/file/UGmocjHXjvbi0D1kboAGJv/Material-3-Desi
 User Guide: [Guide](userguide.md)
 
 ## Application
-
 Video: [Video](https://www.youtube.com/)
 Web-APP: [App](https://noahmeissner.github.io/#/)
 
