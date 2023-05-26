@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.3
   flutter_svg: ^2.0.6
+  http: ^1.0.0
 
 
 dev_dependencies:
@@ -29,4 +30,5 @@ flutter_intl:
       - /kebab_menu.svg
       - /juergen.png
       - /laura_mueller.png
+      - /LaPa-logo.png
 

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:language_partner/chat/bloc/chat_bloc.dart';
 import 'package:language_partner/chat/message.dart';
 import 'package:language_partner/chat_list/view/homepage.dart';
+import 'package:language_partner/vocabulary/vocabulary.dart';
 import 'package:language_partner/shared/constants/constants.dart';
 import 'package:language_partner/shared/shared_widgets/back_button.dart';
 
@@ -15,7 +19,9 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  List<Message> messages = Messages.createTestMsg();
+  List<Message> messages = [];
+
+  late ChatBloc bloc;
 
   @override
   void initState() {
@@ -33,40 +39,46 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
+    final chatBloc = context.read<ChatBloc>()..add(GetMessages());
     return Scaffold(
-        appBar: AppBar(
-          leading: NavigateBackButton(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen()),
-            ),
-          ),
-          title: Text(
-            widget.name,
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        centerTitle: true,
+        leading: NavigateBackButton(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => HomeScreen()),
           ),
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              flex: 9,
-              child: ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (ctx, index) {
-                  Message msg = messages.elementAt(index);
-                  return ChatMessage(
-                    isUser: msg.user == 'A',
-                    message: msg.message,
-                    timestamp: msg.timestamp,
-                  );
-                },
-              ),
+        title: Text(
+          widget.name,
+        ),
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(
+            flex: 9,
+            child: BlocBuilder<ChatBloc, ChatState>(
+              bloc: chatBloc,
+              builder: (ctx, state) {
+                if (state is ChatInitial) {
+                  return _createList([]);
+                } else if (state is MessagesReceived) {
+                  return _createList(state.messages);
+                } else {
+                  return _createList([]);
+                }
+              },
             ),
-            Expanded(
-              child: Padding(
-                padding: paddingAllSidesRegular,
-                child: Row(
-                  children: [
-                    Expanded(
+          ),
+          Expanded(
+            child: Padding(
+              padding: paddingAllSidesRegular,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 48,
                       child: TextField(
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -80,13 +92,30 @@ class _ChatState extends State<Chat> {
                         ),
                         controller: _controller,
                       ),
-                    ),
-                  ],
-                ),
+                    )
+                  ),
+                ],
               ),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _createList(List<Message> messages) {
+    return ListView.builder(
+      itemCount: messages.length,
+      reverse: true,
+      itemBuilder: (ctx, index) {
+        Message msg = messages.elementAt(messages.length - 1 - index);
+        return ChatMessage(
+          isUser: msg.user == 'A',
+          message: msg.message,
+          timestamp: msg.timestamp!,
+        );
+      },
+    );
   }
 
   _sendMessage() {
@@ -96,7 +125,7 @@ class _ChatState extends State<Chat> {
       setState(() {
         messages.add(
           Message(
-            DateTime.now(),
+            DateTime.now() as String,
             'A',
             messages.length.toString(),
             text,
@@ -111,7 +140,7 @@ class _ChatState extends State<Chat> {
 class ChatMessage extends StatelessWidget {
   final bool isUser;
   final String message;
-  final DateTime timestamp;
+  final String timestamp;
 
   const ChatMessage(
       {super.key,
@@ -132,7 +161,7 @@ class ChatMessage extends StatelessWidget {
               : ChatBubble(
                   isUser: isUser,
                   message: message,
-                  timestamp: _formatTimestamp(timestamp),
+                  timestamp: timestamp,
                 ),
         ),
         Expanded(
@@ -141,7 +170,7 @@ class ChatMessage extends StatelessWidget {
               ? ChatBubble(
                   isUser: isUser,
                   message: message,
-                  timestamp: _formatTimestamp(timestamp),
+                  timestamp: timestamp,
                 )
               : SizedBox(),
         ),
@@ -174,50 +203,53 @@ class _ChatBubbleState extends State<ChatBubble> {
   Widget build(BuildContext context) {
     return Padding(
       padding: paddingAllSidesRegular,
-      child: Container(
-        child: Card(
-          elevation: 8,
-          color: widget.isUser ? Colors.lightBlue : colorBot,
-          child: Wrap(
-            spacing: 8.0,
-            runSpacing: 8.0,
-            alignment: WrapAlignment.center,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: paddingAllSidesRegular,
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        widget.message,
-                        style: textStyleRegular,
-                        textAlign: TextAlign.start,
+      child: GestureDetector(
+        onLongPress: () => _showMyDialog(),
+        child: Container(
+          child: Card(
+            elevation: 4,
+            color: widget.isUser ? Colors.lightBlue : colorBot,
+            child: Wrap(
+              spacing: 8.0,
+              runSpacing: 8.0,
+              alignment: WrapAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: paddingAllSidesRegular,
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          widget.message,
+                          style: textStyleRegular,
+                          textAlign: TextAlign.start,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: paddingAllSidesRegular,
-                    child: Row(
-                      mainAxisAlignment: !widget.isUser
-                          ? MainAxisAlignment.spaceBetween
-                          : MainAxisAlignment.start,
-                      children: [
-                        Text(widget.timestamp),
-                        if (!widget.isUser)
-                          IconButton(
-                            icon: SvgPicture.asset('/kebab_menu.svg'),
-                            iconSize: 48,
-                            onPressed: () => _showMyDialog(),
-                          ),
-                      ],
+                    Padding(
+                      padding: paddingAllSidesRegular,
+                      child: Row(
+                        mainAxisAlignment: !widget.isUser
+                            ? MainAxisAlignment.spaceBetween
+                            : MainAxisAlignment.start,
+                        children: [
+                          Text(widget.timestamp),
+                          if (!widget.isUser)
+                            IconButton(
+                              icon: SvgPicture.asset('/kebab_menu.svg'),
+                              iconSize: 48,
+                              onPressed: () => _showMyDialog(),
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -231,7 +263,7 @@ class _ChatBubbleState extends State<ChatBubble> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('AlertDialog Title'),
-          content: const SingleChildScrollView(
+          content: SingleChildScrollView(
             child: Padding(
               padding: paddingAllSidesRegular,
               child: Wrap(
@@ -242,30 +274,44 @@ class _ChatBubbleState extends State<ChatBubble> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'translate',
-                        style: textStyleRegular,
+                      GestureDetector(
+                        onTap: () => print('fetch translation'),
+                        child: Text(
+                          'translate',
+                          style: textStyleRegular,
+                        ),
                       ),
                       Divider(
                         color: Colors.black,
                       ),
-                      Text(
-                        'grammar',
-                        style: textStyleRegular,
+                      GestureDetector(
+                        onTap: () => print('fetch grammar'),
+                        child: Text(
+                          'grammar',
+                          style: textStyleRegular,
+                        ),
                       ),
                       Divider(
                         color: Colors.black,
                       ),
-                      Text(
-                        'copy',
-                        style: textStyleRegular,
+                      GestureDetector(
+                        onTap: () async => await Clipboard.setData(ClipboardData(text: widget.message)),
+                        child: Text(
+                          'copy',
+                          style: textStyleRegular,
+                        ),
                       ),
                       Divider(
                         color: Colors.black,
                       ),
-                      Text(
-                        'get vocabulary',
-                        style: textStyleRegular,
+                      GestureDetector(
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Vocabulary(message: widget.message)),
+                        ),
+                        child: Text(
+                          'get vocabulary',
+                          style: textStyleRegular,
+                        ),
                       ),
                     ],
                   ),

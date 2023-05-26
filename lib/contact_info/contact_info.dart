@@ -6,59 +6,144 @@ import 'package:language_partner/shared/constants/constants.dart';
 import 'package:language_partner/shared/shared_widgets/back_button.dart';
 
 class ContactInfo extends StatelessWidget {
-
   final String image;
   final String name;
   final String description;
 
-  const ContactInfo({super.key, required this.image, required this.name, required this.description});
+  const ContactInfo(
+      {super.key,
+      required this.image,
+      required this.name,
+      required this.description});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: NavigateBackButton(
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => HomeScreen())),
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => HomeScreen())),
         ),
         title: Text(
-          'contact',
+          'contacts',
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
-          CircularImage(
-            path: image,
-            size: 128,
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              name,
-              style: textStyleLarge,
-            ),
-          ),
-          Expanded(
-            flex: 4,
-            child: Text(
-              description,
-              style: textStyleRegular,
-            ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularImage(
+                path: image,
+                size: 128,
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              Padding(
+                padding: paddingAllSidesRegular,
+                child: Card(
+                  elevation: 8,
+                  child: Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: paddingAllSidesRegular,
+                            child: Text(
+                              name,
+                              style: textStyleLarge,
+                            ),
+                          ),
+                          Padding(
+                            padding: paddingAllSidesRegular,
+                            child: Text(
+                              description,
+                              style: textStyleRegular,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Text(
+                'language difficulty level',
+                style: textStyleRegular,
+              ),
+              RadioListDifficulty(),
+              SizedBox(
+                height: 64,
+              ),
+            ],
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => Chat(name: name))),
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Chat(name: name))),
         child: Icon(
           Icons.chat,
         ),
       ),
     );
   }
+}
 
+enum DifficultyLevel { beginner, intermediate, advanced }
+
+class RadioListDifficulty extends StatefulWidget {
+  const RadioListDifficulty({super.key});
+
+  @override
+  State<RadioListDifficulty> createState() => _RadioListDifficultyState();
+}
+
+class _RadioListDifficultyState extends State<RadioListDifficulty> {
+  DifficultyLevel? _character = DifficultyLevel.beginner;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        RadioListTile<DifficultyLevel>(
+          title: const Text('beginner'),
+          value: DifficultyLevel.beginner,
+          groupValue: _character,
+          onChanged: (DifficultyLevel? value) {
+            setState(() {
+              _character = value;
+            });
+          },
+        ),
+        RadioListTile<DifficultyLevel>(
+          title: const Text('intermediate'),
+          value: DifficultyLevel.intermediate,
+          groupValue: _character,
+          onChanged: (DifficultyLevel? value) {
+            setState(() {
+              _character = value;
+            });
+          },
+        ),
+        RadioListTile<DifficultyLevel>(
+          title: const Text('advanced'),
+          value: DifficultyLevel.advanced,
+          groupValue: _character,
+          onChanged: (DifficultyLevel? value) {
+            setState(() {
+              _character = value;
+            });
+          },
+        ),
+      ],
+    );
+  }
 }

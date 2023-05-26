@@ -95,7 +95,7 @@ class ContactWindow extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: SvgPicture.asset('/kebab_menu.svg'),
+                      icon: SvgPicture.asset('kebab_menu.svg'),
                       iconSize: 48,
                       onPressed: options,
                     ),

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:language_partner/chat_list/chat_list.dart';
-import 'package:language_partner/chat_list/vocabulary.dart';
+import 'package:language_partner/vocabulary/vocabulary.dart';
 import 'package:language_partner/shared/shared_widgets/back_button.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('Vocabulary'),
       ),
-      body: Vocabulary(),
+      body: Vocabulary(message: null),
     ),
     // Scaffold(
       //appBar: AppBar(
