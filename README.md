@@ -18,7 +18,7 @@ Video: [Video](https://www.youtube.com/)
 
 Web-APP: [App](https://noahmeissner.github.io/#/)
 
-API REPO: [API](https://noahmeissner.github.io/#/)
+API REPO: [API](https://github.com/Max-We/lapa-api)
 
 
 ## Team
