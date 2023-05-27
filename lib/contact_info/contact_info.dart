@@ -20,6 +20,7 @@ class ContactInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: NavigateBackButton(
           onPressed: () => Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => HomeScreen())),

@@ -31,7 +31,7 @@ const idUserTwo = '';
 
 const colorBot = Colors.white54;
 
-const uid = '7tJhRza5dyh1GpD3597y';
+const uid = 'PRDG1vxLbmu7lcvy4yZc';
 
 String url() {
   return 'localhost:4000/';

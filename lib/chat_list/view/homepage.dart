@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
     Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Vocabulary'),
       ),
       body: Vocabulary(message: null),
