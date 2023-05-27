@@ -1,36 +1,37 @@
-
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:language_partner/shared/constants/constants.dart';
-
+import 'package:language_partner/chat/message.dart';
+import 'package:language_partner/main.dart';
 
 class VocabularyContent {
-
   static Future<List<Word>?> getVocabulary() async {
-    var result = await http.get(Uri.parse(url()));
-    if (result.statusCode == 200) {
-      List<dynamic> messages = jsonDecode(result.body);
-      return messages.map((e) => Word.fromJson(e)).toList();
-    } else {
-      return null;
-    }
+    Uri uri = Uri.parse('${Messages.url}/api/user/${UserId.userId}/vocabulary');
+    var result = await http.get(uri);
+    print(result.body);
+    return _sort(result.body);
   }
 
-  static Future<List<Word>?> addWords(Map<String, dynamic> word) async {
-    final response = await http.put(
-      Uri.parse(url()),
+  static Future<void> addWords(String msg) async {
+    await http.post(
+      Uri.parse(
+          '${Messages.url}/api/users/${UserId.userId}/saveVocabularyFromSentence'),
       headers: {
         'Content-Type': 'application/json', // Specify the content type as JSON
       },
-      body: jsonEncode(word), // Convert the object to JSON
+      body: jsonEncode({
+        'message': msg,
+        'outputLanguage': 'German'
+      }), // Convert the object to JSON
     );
+  }
 
-    if (response.statusCode == 200) {
-      return await getVocabulary();
-    } else {
-      return null;
-    }
+  static List<Word> _sort(String result) {
+    List<String> m = result.split(',');
+    List<Word> temp = m.map((e) => Word.fromJson(e)).toList();
+    temp.sort(
+        (a, b) => a.original.toLowerCase().compareTo(b.original.toLowerCase()));
+    return temp;
   }
 }
 
@@ -40,13 +41,19 @@ class Word {
 
   Word(this.original, this.translation);
 
-  factory Word.fromJson(Map<String, dynamic> json) {
-    return Word(json.keys.first, json.values.first);
+  factory Word.fromJson(String s) {
+    List<String> sub = s.split(':');
+    return Word(
+      sub.first.replaceAll('"', "").replaceAll('{', "").replaceAll('}', ""),
+      sub.last.replaceAll('"', "").replaceAll('{', "").replaceAll('}', ""),
+    );
   }
 
   Map<String, String> toJson() {
+    // fuck me
     return {
-      original: translation
+      'key': original,
+      'value': translation,
     };
   }
 }

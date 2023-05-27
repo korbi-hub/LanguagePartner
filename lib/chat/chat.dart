@@ -8,6 +8,7 @@ import 'package:language_partner/chat_list/view/homepage.dart';
 import 'package:language_partner/shared/constants/constants.dart';
 import 'package:language_partner/shared/shared_widgets/back_button.dart';
 
+// ignore: must_be_immutable
 class Chat extends StatefulWidget {
   final String name;
   late String b;
@@ -92,6 +93,11 @@ class _ChatState extends State<Chat> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           labelText: 'enter a message',
+                          contentPadding: const EdgeInsets.only(
+                            left: 8.0,
+                            bottom: 8.0,
+                            top: 8.0,
+                          ),
                           suffixIcon: IconButton(
                             onPressed: () => _sendMessage(),
                             icon: Icon(

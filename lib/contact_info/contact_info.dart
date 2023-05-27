@@ -43,7 +43,7 @@ class ContactInfo extends StatelessWidget {
                 height: 16,
               ),
               Padding(
-                padding: paddingAllSidesRegular,
+                padding: paddingAllSidesRegular.copyWith(right: 8, left: 8),
                 child: Card(
                   elevation: 8,
                   child: Wrap(

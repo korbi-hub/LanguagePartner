@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:language_partner/chat/chat.dart';
 import 'package:language_partner/contact_info/contact_info.dart';
 import 'package:language_partner/shared/constants/constants.dart';
@@ -95,8 +94,7 @@ class ContactWindow extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      icon: SvgPicture.asset('kebab_menu.svg'),
-                      iconSize: 48,
+                      icon: Icon(Icons.info_outline_rounded),
                       onPressed: options,
                     ),
                   ],

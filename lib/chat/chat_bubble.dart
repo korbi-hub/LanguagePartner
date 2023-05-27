@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:language_partner/chat/bloc/chat_bloc.dart';
 import 'package:language_partner/shared/constants/constants.dart';
-import 'package:language_partner/vocabulary/vocabulary.dart';
+import 'package:language_partner/vocabulary/vocabulary_content.dart';
 
 class ChatBubble extends StatefulWidget {
   final bool isUser;
@@ -15,7 +16,8 @@ class ChatBubble extends StatefulWidget {
       {super.key,
       required this.isUser,
       required this.message,
-      required this.timestamp, required this.b});
+      required this.timestamp,
+      required this.b});
 
   @override
   State<StatefulWidget> createState() => _ChatBubbleState();
@@ -56,6 +58,23 @@ class _ChatBubbleState extends State<ChatBubble> {
                         ),
                       ),
                     ),
+                    if (!widget.isUser)
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: paddingAllSidesRegular,
+                          child: GestureDetector(
+                            onTap: () {
+                              _showMyDialog();
+                            },
+                            child: SvgPicture.asset(
+                              'images/kebab_menu.svg',
+                              width: 24,
+                              height: 24,
+                            ),
+                          ),
+                        )
+                      ),
                   ],
                 ),
               ],
@@ -86,11 +105,13 @@ class _ChatBubbleState extends State<ChatBubble> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          context.read<ChatBloc>().add(GetTranslation(widget.message, widget.b));
+                          context
+                              .read<ChatBloc>()
+                              .add(GetTranslation(widget.message, widget.b));
                           Navigator.of(context).pop();
                         },
                         child: Text(
-                          'translate',
+                          'translate text',
                           style: textStyleRegular,
                         ),
                       ),
@@ -99,11 +120,13 @@ class _ChatBubbleState extends State<ChatBubble> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.read<ChatBloc>().add(GetExplanation(widget.message, widget.b));
+                          context
+                              .read<ChatBloc>()
+                              .add(GetExplanation(widget.message, widget.b));
                           Navigator.of(context).pop();
                         },
                         child: Text(
-                          'grammar',
+                          'explain grammar',
                           style: textStyleRegular,
                         ),
                       ),
@@ -120,7 +143,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                           Navigator.of(context).pop();
                         },
                         child: Text(
-                          'copy',
+                          'copy text',
                           style: textStyleRegular,
                         ),
                       ),
@@ -128,12 +151,18 @@ class _ChatBubbleState extends State<ChatBubble> {
                         color: Colors.black,
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                Vocabulary(message: widget.message),
-                          ),
-                        ),
+                        onTap: () async {
+                          Navigator.of(context).pop();
+                          await VocabularyContent.addWords(widget.message).then(
+                            (value) {
+                              const snackBar = SnackBar(
+                                content: Text('saved vocabulary'),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                          );
+                        },
                         child: Text(
                           'get vocabulary',
                           style: textStyleRegular,

@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Text('Vocabulary'),
       ),
-      body: Vocabulary(message: null),
+      body: Vocabulary(),
     ),
     // Scaffold(
       //appBar: AppBar(

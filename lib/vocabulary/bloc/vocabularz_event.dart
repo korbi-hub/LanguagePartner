@@ -7,7 +7,7 @@ class RequestNormal extends VocabularyEvent {}
 
 class RequestParam extends VocabularyEvent {
 
-  final Word word;
+  final String word;
 
   RequestParam(this.word);
 

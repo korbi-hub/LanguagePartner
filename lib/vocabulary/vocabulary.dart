@@ -4,38 +4,38 @@ import 'package:language_partner/shared/constants/constants.dart';
 import 'package:language_partner/vocabulary/bloc/vocabularz_bloc.dart';
 
 class Vocabulary extends StatefulWidget {
-  final String? message;
-
-  const Vocabulary({super.key, required this.message});
+  const Vocabulary({super.key});
 
   @override
   State<StatefulWidget> createState() => _VocabularyState();
 }
 
 class _VocabularyState extends State<Vocabulary> {
+  late VocabularyBloc bloc;
+
   @override
   Widget build(BuildContext context) {
+    bloc = context.read<VocabularyBloc>();
+    bloc.add(RequestNormal());
     return Padding(
       padding: paddingAllSidesRegular,
       child: BlocBuilder<VocabularyBloc, VocabularyState>(
-        bloc: context.read<VocabularyBloc>()..add(RequestNormal()),
+        bloc: bloc,
         builder: (ctx, state) {
-          if (state is VocabularyInitial) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is LoadingSuccess) {
+          if (state is LoadingSuccess) {
             return ListView.builder(
               itemCount: state.words.length,
               itemBuilder: (ctx, i) {
                 return Padding(
                   padding: paddingAllSidesRegular,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           state.words[i].original,
+                          style: textStyleRegular,
                         ),
                       ),
                       Align(
@@ -49,7 +49,8 @@ class _VocabularyState extends State<Vocabulary> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                            state.words[i].original
+                          state.words[i].original,
+                          style: textStyleRegular,
                         ),
                       ),
                     ],

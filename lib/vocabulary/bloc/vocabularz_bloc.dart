@@ -14,11 +14,6 @@ class VocabularyBloc extends Bloc<VocabularyEvent, VocabularyState> {
           ? emit(LoadingFailed())
           : emit(LoadingSuccess(words));
     });
-    on<RequestParam>((event, emit) async {
-      List<Word>? words = await VocabularyContent.addWords(event.word.toJson());
-      words == null
-          ? emit(LoadingFailed())
-          : emit(LoadingSuccess(words));
-    });
+
   }
 }
