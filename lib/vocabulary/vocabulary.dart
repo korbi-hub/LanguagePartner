@@ -49,7 +49,7 @@ class _VocabularyState extends State<Vocabulary> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          state.words[i].original,
+                          state.words[i].translation,
                           style: textStyleRegular,
                         ),
                       ),

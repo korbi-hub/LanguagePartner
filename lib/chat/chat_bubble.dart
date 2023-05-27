@@ -37,7 +37,7 @@ class _ChatBubbleState extends State<ChatBubble> {
         child: Container(
           child: Card(
             elevation: 4,
-            color: widget.isUser ? Colors.lightBlue : colorBot,
+            color: widget.isUser ? Color.fromRGBO(142, 232, 250, 1) : colorBot,
             child: Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
@@ -60,21 +60,20 @@ class _ChatBubbleState extends State<ChatBubble> {
                     ),
                     if (!widget.isUser)
                       Align(
-                        alignment: Alignment.centerRight,
-                        child: Padding(
-                          padding: paddingAllSidesRegular,
-                          child: GestureDetector(
-                            onTap: () {
-                              _showMyDialog();
-                            },
-                            child: SvgPicture.asset(
-                              'images/kebab_menu.svg',
-                              width: 24,
-                              height: 24,
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: paddingAllSidesRegular,
+                            child: GestureDetector(
+                              onTap: () {
+                                _showMyDialog();
+                              },
+                              child: SvgPicture.asset(
+                                'images/kebab_menu.svg',
+                                width: 24,
+                                height: 24,
+                              ),
                             ),
-                          ),
-                        )
-                      ),
+                          )),
                   ],
                 ),
               ],
@@ -116,7 +115,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                         ),
                       ),
                       Divider(
-                        color: Colors.black,
+                        color: Colors.black38,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -131,7 +130,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                         ),
                       ),
                       Divider(
-                        color: Colors.black,
+                        color: Colors.black38,
                       ),
                       GestureDetector(
                         onTap: () async {
@@ -148,7 +147,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                         ),
                       ),
                       Divider(
-                        color: Colors.black,
+                        color: Colors.black38,
                       ),
                       GestureDetector(
                         onTap: () async {
