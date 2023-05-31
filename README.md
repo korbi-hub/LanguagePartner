@@ -14,11 +14,11 @@ User Guide: [Guide](userguide.md)
 DevOPs Post: [Post](https://devpost.com/software/lapa)
 
 ## Application
-Video: [Video](https://www.youtube.com/)
+Video: [Video](https://www.youtube.com/watch?v=o_VK9J2H0Fo)
 
 Web-APP: [App](https://noahmeissner.github.io/#/)
 
-API REPO: [API](https://noahmeissner.github.io/#/)
+API REPO: [API](https://github.com/Max-We/lapa-api)
 
 
 ## Team
