@@ -25,7 +25,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/LaPa-logo.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
+  min_sdk_android: 21
   web:
     generate: true
     image_path: "assets/LaPa-logo.png"
@@ -34,7 +34,7 @@ flutter_launcher_icons:
   windows:
     generate: true
     image_path: "assets/LaPa-logo.png"
-    icon_size: 48 # min:48, max:256, default: 48
+    icon_size: 48
   macos:
     generate: true
     image_path: "assets/LaPa-logo.png"
@@ -48,5 +48,10 @@ flutter_intl:
 
   flutter:
     assets:
+      - assets/
       - assets/images/
+      - assets/images/juergen.png
+      - assets/images/kebab_menu.svg
+      - assets/images/LaPa-logo.png
+      - assets/images/laura_mueller.png
 

@@ -10,5 +10,11 @@ class RequestParam extends VocabularyEvent {
   final String word;
 
   RequestParam(this.word);
+}
 
+class AddWords extends VocabularyEvent {
+  final String message;
+  final String userId;
+
+  AddWords(this.message, this.userId);
 }

@@ -4,29 +4,32 @@ part of 'chat_bloc.dart';
 abstract class ChatEvent {}
 
 class SendMessage extends ChatEvent {
-  final String b;
+  final String botId;
+  final String userId;
   final Map<String, dynamic> message;
 
-  SendMessage(this.message, this.b);
+  SendMessage(this.message, this.botId, this.userId);
 }
 
 class GetMessages extends ChatEvent {
-  final String msg;
-  final String b;
+  final String botId;
+  final String userId;
 
-  GetMessages(this.msg, this.b);
+  GetMessages(this.botId, this.userId);
 }
 
 class GetExplanation extends ChatEvent {
-  final String m;
-  final String b;
+  final String botId;
+  final String userId;
+  final String message;
 
-  GetExplanation(this.m, this.b);
+  GetExplanation(this.message, this.botId, this.userId);
 }
 
 class GetTranslation extends ChatEvent {
-  final String m;
-  final String b;
+  final String botId;
+  final String userId;
+  final String message;
 
-  GetTranslation(this.m, this.b);
+  GetTranslation(this.message, this.botId, this.userId);
 }
